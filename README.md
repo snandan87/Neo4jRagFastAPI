@@ -52,3 +52,17 @@ For Windows Power Shell use: .venv\Scripts\Activate.ps1
 bash
 uv pip install langchain langchain-neo4j langchain-openai fastapi uvicorn pydantic python-dotenv
 
+
+Docker Command:
+
+docker run -d `
+  --name neo4j-rag `
+  -p 7474:7474 -p 7687:7687 `
+  --env NEO4J_PLUGINS="[\"apoc\"]" `
+  --env NEO4J_dbms_security_procedures_unrestricted="apoc.*" `
+  --env NEO4J_dbms_security_procedures_allowlist="apoc.*" `
+  --env NEO4J_AUTH=neo4j/boinchi@712134 `
+neo4j:5.26.32-community-ubi10
+Start App:
+uvicorn source.graph-rag-api:app --host 0.0.0.0 --port 5000 --reload
+
